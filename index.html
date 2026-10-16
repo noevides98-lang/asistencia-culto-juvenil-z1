@@ -47,7 +47,34 @@ function renderHistory(){const list=$('historyList');list.replaceChildren();if(!
 function openEdit(id){const r=registros.find(x=>x.id===id);if(!r)return;editarId=id;for(const f of fields)$('e'+f[0].toUpperCase()+f.slice(1)).value=String(r[f]);$('editModal').classList.remove('hidden')}
 function closeEdit(){editarId=null;$('editModal').classList.add('hidden')}
 function saveEdit(){const r=registros.find(x=>x.id===editarId);if(!r)return;const next={...r};for(const f of fields)next[f]=$('e'+f[0].toUpperCase()+f.slice(1)).value;next.cantidad=Number(next.cantidad);if(!valid(next)){alert('Revisá todos los campos');return}Object.assign(r,next);save();closeEdit();update()}
-function exportPDF(){const choice=prompt('¿Qué PDF querés exportar?\n1 = Resumen por sectores\n2 = Resumen pastoral');if(choice!=='1'&&choice!=='2')return;if(choice==='1'){incluirNinosComoJovenes=confirm('¿Incluir niños como jóvenes en el resumen por sectores?');showView('sectores')}else showView('pastoral');const stamp='Generado el: '+new Date().toLocaleString('es-SV');$('footerSectores').textContent=stamp;$('footerPastoral').textContent=stamp;$('resumenSectores').classList.toggle('print-target',choice==='1');$('resumenPastoral').classList.toggle('print-target',choice==='2');window.print()}
+function exportPDF(){
+  const choice = prompt(
+    '¿Qué PDF querés exportar?\n1 = Resumen por sectores\n2 = Resumen pastoral'
+  );
+
+  if (choice !== '1' && choice !== '2') return;
+
+  if (choice === '1') {
+    incluirNinosComoJovenes = confirm(
+      '¿Incluir niños como jóvenes en el resumen por sectores?'
+    );
+    showView('sectores');
+  } else {
+    showView('pastoral');
+  }
+
+  const stamp = 'Generado el: ' + new Date().toLocaleString('es-SV');
+
+  $('footerSectores').textContent = stamp;
+  $('footerPastoral').textContent = stamp;
+
+  $('resumenSectores').classList.toggle('print-target', choice === '1');
+  $('resumenPastoral').classList.toggle('print-target', choice === '2');
+
+  setTimeout(() => {
+    window.print();
+  }, 300);
+}
 $('addBtn').onclick=registrar;$('histBtn').onclick=()=>{$('historyPanel').classList.toggle('hidden');renderHistory()};$('closeHistory').onclick=()=>$('historyPanel').classList.add('hidden');$('sectorBtn').onclick=()=>showView('sectores');$('pastorBtn').onclick=()=>showView('pastoral');$('toggleNinos').onclick=()=>{incluirNinosComoJovenes=!incluirNinosComoJovenes;renderSectores()};$('exportBtn').onclick=exportPDF;$('cancelEdit').onclick=closeEdit;$('saveEdit').onclick=saveEdit;$('newBtn').onclick=()=>{if(confirm('¿Iniciar una nueva salida? Se borrarán los registros del mes activo en este dispositivo.')){registros=[];save();update()}};
 load();update();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./service-worker.js').catch(console.warn);
 </script>
