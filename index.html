@@ -1,226 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Asistencia Culto Juvenil</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1976d2">
-  <style>
-    body { font-family: Arial, sans-serif; background:#f4f6f8; padding:16px; }
-    h1,h2 { text-align:center; }
-    .card { background:#fff; border-radius:8px; padding:16px; max-width:480px; margin:0 auto 16px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-    label { display:block; margin-top:10px; font-weight:bold; }
-    select, button { width:100%; padding:10px; margin-top:6px; font-size:16px; }
-    button { background:#1976d2; color:#fff; border:none; border-radius:6px; cursor:pointer; }
-    button.secondary { background:#555; }
-    table { width:100%; border-collapse:collapse; margin-top:12px; font-size:14px; }
-    th,td { border:1px solid #333; padding:6px; text-align:center; }
-    th { background:#e0e0e0; }
-    .hidden { display:none; }
-    .totalBus { font-size:18px; font-weight:bold; text-align:center; margin-top:8px; }
-
-    @media print {
-      body { background:#fff; padding:0; }
-      .card:not(.printable) { display:none !important; }
-      button { display:none !important; }
-      h1 { display:none; }
-      .print-footer { display:block; margin-top:12px; text-align:center; font-size:12px; }
-    }
-
-    .print-footer { display:none; }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Asistencia Culto Juvenil Z1</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1976d2">
+<style>
+:root{font-family:system-ui,-apple-system,Arial,sans-serif;color:#182334;background:#f3f6fa}*{box-sizing:border-box}body{margin:0;padding:16px;max-width:650px;margin-inline:auto}h1{font-size:1.45rem;margin:8px 0}h2{font-size:1.15rem;margin:0 0 14px}.header{display:flex;justify-content:space-between;align-items:center;gap:12px}.muted{color:#586579;font-size:.88rem}.card{background:white;padding:18px;border-radius:14px;box-shadow:0 2px 10px #172d4514;margin:14px 0}label{display:block;font-weight:650;margin:12px 0 5px}select,button{font:inherit;min-height:44px;border-radius:9px}select{width:100%;padding:9px;border:1px solid #bcc8d7;background:white}button{cursor:pointer;border:0;padding:10px 14px;background:#1976d2;color:white;font-weight:650}.secondary{background:#526071}.danger{background:#a72b34}.outline{background:white;color:#26435d;border:1px solid #b5c3d3}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.total{text-align:center;font-size:1.3rem;font-weight:750;margin:14px}.hidden{display:none!important}.history-entry{border:1px solid #d6dee7;border-radius:11px;padding:12px;margin:9px 0}.history-entry p{margin:5px 0}.small{font-size:.85rem}.history-entry .actions button{font-size:.9rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.82rem}th,td{border:1px solid #667483;padding:7px 4px;text-align:center}th{background:#e8eef5}tfoot th{background:#dce8f5}.footer{display:none;font-size:.75rem;text-align:right;margin-top:18px}.modal-bg{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:14px;z-index:20}.modal{background:white;border-radius:14px;padding:20px;width:min(100%,430px);max-height:90vh;overflow:auto}.note{font-size:.8rem;color:#586579}#historyPanel{max-height:70vh;overflow:auto}@media print{@page{size:A4;margin:16mm}body{max-width:none;padding:0;background:white}.header,.no-print,#historyPanel,.modal-bg{display:none!important}.card{display:none!important;box-shadow:none;padding:0;margin:0}.card.print-target{display:block!important}.card.print-target h2{text-align:center}.footer{display:block!important}table{font-size:11px}th,td{padding:6px}.hidden.print-target{display:block!important}}
+</style>
 </head>
 <body>
-
-<h1>Asistencia Culto Juvenil Z1</h1>
-<p style="text-align:center;font-weight:bold;" id="mesActivo"></p>
-
-<div class="card">
-  <h2>Registrar persona</h2>
-
-  <label>Sector / Zona</label>
-  <select id="sector">
-    <option value="">Seleccione</option>
-    <option value="1">Sector 1</option><option value="2">Sector 2</option><option value="3">Sector 3</option>
-    <option value="4">Sector 4</option><option value="5">Sector 5</option><option value="6">Sector 6</option>
-    <option value="7">Sector 7</option><option value="8">Sector 8</option><option value="9">Sector 9</option>
-    <option value="10">Sector 10</option>
-  </select>
-
-  <label>Grupo</label>
-  <select id="grupo">
-    <option value="">Seleccione</option>
-    <option value="adulto">Adulto</option>
-    <option value="joven">Joven</option>
-    <option value="nino">Niño</option>
-  </select>
-
-  <label>Género</label>
-  <select id="genero">
-    <option value="">Seleccione</option>
-    <option value="hombre">Hombre</option>
-    <option value="mujer">Mujer</option>
-  </select>
-
-  <label>Tipo</label>
-  <select id="tipo">
-    <option value="">Seleccione</option>
-    <option value="hermano">Hermano</option>
-    <option value="amigo">Amigo</option>
-  </select>
-<label for="cantidad">Cantidad de personas</label>
-<select id="cantidad">
-  <option value="1" selected>1 persona</option>
-  <option value="2">2 personas</option>
-  <option value="3">3 personas</option>
-  <option value="4">4 personas</option>
-  <option value="5">5 personas</option>
-</select>
-  <button onclick="registrar()">Agregar persona</button>
-  <div class="totalBus" id="totalBus">Total en el bus: 0</div>
-<button class="secondary" onclick="nuevaSalida()" style="margin-top:10px;background:#b71c1c;">🗑️ Nueva salida de bus</button>
-</div>
-
-<div class="card">
-  <button class="secondary" onclick="mostrarResumenSectores()">📊 Resumen por sectores</button>
-  <button class="secondary" onclick="mostrarResumenPastoral()" style="margin-top:8px;">🧾 Resumen distrito</button>
-  <button class="secondary" onclick="exportarPDF()" style="margin-top:8px;">🖨️ Exportar PDF</button>
-</div>
-
-<div class="card hidden printable" id="resumenSectores">
-  <h2>Resumen por sectores</h2>
-  <button class="secondary" onclick="toggleNinos()">🔁 Incluir / Separar niños</button>
-  <table>
-    <thead>
-      <tr><th rowspan="2">Sector</th><th colspan="3">Adultos</th><th colspan="3">Jóvenes</th></tr>
-      <tr><th>Hnos</th><th>Amigos</th><th>Total</th><th>Hnos</th><th>Amigos</th><th>Total</th></tr>
-    </thead>
-    <tbody id="tablaSectores"></tbody>
-    <tfoot>
-      <tr style="font-weight:bold;background:#f3f3f3;">
-        <th colspan="6">TOTAL GENERAL</th><th id="totalSector">0</th>
-      </tr>
-    </tfoot>
-  </table>
-  <div class="print-footer" id="printFooter"></div>
-</div>
-
-<div class="card hidden printable" id="resumenPastoral">
-  <h2>Asistencia al culto juvenil</h2>
-  <table><tbody id="tablaPastoral"></tbody></table>
-  <div class="print-footer" id="printFooterPastoral"></div>
-</div>
-
+<header class="header no-print"><div><h1>Asistencia Culto Juvenil Z1</h1><div class="muted" id="mesActivo"></div></div><button class="secondary" id="histBtn" aria-label="Abrir historial">☷ Historial</button></header>
+<section class="card no-print"><h2>Registrar personas</h2>
+<label for="sector">Sector</label><select id="sector"><option value="">Seleccione</option></select>
+<label for="grupo">Grupo</label><select id="grupo"><option value="">Seleccione</option><option value="adulto">Adulto</option><option value="joven">Joven</option><option value="nino">Niño</option></select>
+<label for="genero">Género</label><select id="genero"><option value="">Seleccione</option><option value="hombre">Hombre</option><option value="mujer">Mujer</option></select>
+<label for="tipo">Tipo</label><select id="tipo"><option value="">Seleccione</option><option value="hermano">Hermano</option><option value="amigo">Amigo</option></select>
+<label for="cantidad">Cantidad de personas</label><select id="cantidad"><option value="1">1 persona</option><option value="2">2 personas</option><option value="3">3 personas</option><option value="4">4 personas</option><option value="5">5 personas</option></select>
+<button id="addBtn" style="width:100%;margin-top:15px">Agregar personas</button><div class="total" id="totalBus">Total en el bus: 0</div><button class="danger" id="newBtn" style="width:100%">Nueva salida de bus</button></section>
+<section class="card no-print"><div class="actions"><button class="secondary" id="sectorBtn">Resumen por sectores</button><button class="secondary" id="pastorBtn">Resumen pastoral</button></div><button id="exportBtn" style="width:100%;margin-top:9px">Exportar PDF</button></section>
+<section id="historyPanel" class="card hidden no-print"><div class="header"><h2>Lista reciente</h2><button class="outline" id="closeHistory">Cerrar</button></div><div id="historyList"></div></section>
+<section id="resumenSectores" class="card hidden"><h2>Resumen por sectores</h2><button class="secondary no-print" id="toggleNinos">Niños incluidos en jóvenes: NO</button><div class="scroll"><table><thead><tr><th rowspan="2">Sector</th><th colspan="3">Adultos</th><th colspan="3">Jóvenes</th></tr><tr><th>Hnos</th><th>Amigos</th><th>Total</th><th>Hnos</th><th>Amigos</th><th>Total</th></tr></thead><tbody id="tablaSectores"></tbody><tfoot><tr><th colspan="6">TOTAL GENERAL DEL RESUMEN</th><th id="totalSector">0</th></tr></tfoot></table></div><div class="footer" id="footerSectores"></div></section>
+<section id="resumenPastoral" class="card hidden"><h2>Asistencia al culto juvenil</h2><table><tbody id="tablaPastoral"></tbody></table><div class="footer" id="footerPastoral"></div></section>
+<div id="editModal" class="modal-bg hidden no-print" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div class="modal"><h2 id="editTitle">Editar registro</h2><label for="eSector">Sector</label><select id="eSector"></select><label for="eGrupo">Grupo</label><select id="eGrupo"><option value="adulto">Adulto</option><option value="joven">Joven</option><option value="nino">Niño</option></select><label for="eGenero">Género</label><select id="eGenero"><option value="hombre">Hombre</option><option value="mujer">Mujer</option></select><label for="eTipo">Tipo</label><select id="eTipo"><option value="hermano">Hermano</option><option value="amigo">Amigo</option></select><label for="eCantidad">Cantidad</label><select id="eCantidad"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><div class="actions" style="margin-top:17px"><button class="outline" id="cancelEdit">Cancelar</button><button id="saveEdit">Guardar cambios</button></div></div></div>
 <script>
-  const ahora = new Date();
-  const mesClave = `asistencia-${ahora.getFullYear()}-${String(ahora.getMonth()+1).padStart(2,'0')}`;
-  document.getElementById('mesActivo').innerText = `Bus activo: ${ahora.toLocaleString('es-SV',{month:'long',year:'numeric'})}`;
-
-  const datos = JSON.parse(localStorage.getItem(mesClave) || '{}');
-  let totalBus = Number(localStorage.getItem(mesClave+'-total') || 0);
-  let incluirNinosComoJovenes = false;
-
-  const sectorEl = document.getElementById('sector');
-  const grupoEl = document.getElementById('grupo');
-  const generoEl = document.getElementById('genero');
-  const tipoEl = document.getElementById('tipo');
-
-  function registrar() {
-const sector = sectorEl.value;
-  const grupo = grupoEl.value;
-  const genero = generoEl.value;
-  const tipo = tipoEl.value;
-  const cantidad = Number(document.getElementById('cantidad').value);
-
-  if (!sector || !grupo || !genero || !tipo) {
-    alert('Completá todos los campos');
-    return;
-  }
-
-  if (!datos[sector]) datos[sector] = [];
-
-  for (let i = 0; i < cantidad; i++) {
-    datos[sector].push({ grupo, genero, tipo });
-  }
-
-  totalBus += cantidad;
-
-  localStorage.setItem(mesClave, JSON.stringify(datos));
-  localStorage.setItem(mesClave + '-total', totalBus);
-
-  document.getElementById('totalBus').innerText =
-    'Total en el bus: ' + totalBus;
-
-  sectorEl.value = '';
-  grupoEl.value = '';
-  generoEl.value = '';
-  tipoEl.value = '';
-  document.getElementById('cantidad').value = '1';
-  }
-
-  function mostrarResumenSectores() {
-    const tbody = document.getElementById('tablaSectores');
-    tbody.innerHTML = '';
-    let totalGeneral = 0;
-    for (let i = 1; i <= 10; i++) {
-      const registros = datos[i] || [];
-      let aH=0,aA=0,jH=0,jA=0;
-      registros.forEach(r => {
-        if (r.grupo === 'adulto') r.tipo === 'hermano' ? aH++ : aA++;
-        if (r.grupo === 'joven') r.tipo === 'hermano' ? jH++ : jA++;
-        if (r.grupo === 'nino' && incluirNinosComoJovenes) r.tipo === 'hermano' ? jH++ : jA++;
-      });
-      const filaTotal = (aH+aA)+(jH+jA);
-      totalGeneral += filaTotal;
-      tbody.innerHTML += `<tr><td>${i}</td><td>${aH}</td><td>${aA}</td><td>${aH+aA}</td><td>${jH}</td><td>${jA}</td><td>${jH+jA}</td></tr>`;
-    }
-    document.getElementById('totalSector').innerText = totalGeneral;
-    document.getElementById('resumenSectores').classList.remove('hidden');
-    document.getElementById('resumenPastoral').classList.add('hidden');
-  }
-
-  function mostrarResumenPastoral() {
-    let c={AH:0,AM:0,JH:0,JM:0,NH:0,NM:0};
-    Object.values(datos).flat().forEach(r=>{
-      if(r.grupo==='adulto') r.genero==='hombre'?c.AH++:c.AM++;
-      if(r.grupo==='joven') r.genero==='hombre'?c.JH++:c.JM++;
-      if(r.grupo==='nino') r.genero==='hombre'?c.NH++:c.NM++;
-    });
-    document.getElementById('tablaPastoral').innerHTML = `
-      <tr><th colspan="2">Adultos</th></tr><tr><td>Hermanos</td><td>${c.AH}</td></tr><tr><td>Hermanas</td><td>${c.AM}</td></tr>
-      <tr><th colspan="2">Jóvenes</th></tr><tr><td>Hermanos</td><td>${c.JH}</td></tr><tr><td>Hermanas</td><td>${c.JM}</td></tr>
-      <tr><th colspan="2">Niños</th></tr><tr><td>Niños</td><td>${c.NH}</td></tr><tr><td>Niñas</td><td>${c.NM}</td></tr>
-      <tr><th>Total general</th><th>${totalBus}</th></tr>`;
-    document.getElementById('resumenPastoral').classList.remove('hidden');
-    document.getElementById('resumenSectores').classList.add('hidden');
-  }
-
-  function exportarPDF() {
-    const tipo = prompt('Escribí:\n1 = Resumen por sectores\n2 = Resumen pastoral');
-    const fechaHora = new Date().toLocaleString();
-    document.getElementById('printFooter').innerText = 'Generado el: ' + fechaHora;
-    document.getElementById('printFooterPastoral').innerText = 'Generado el: ' + fechaHora;
-    if (tipo === '1') { mostrarResumenSectores(); setTimeout(()=>window.print(),300); }
-    if (tipo === '2') { mostrarResumenPastoral(); setTimeout(()=>window.print(),300); }
-  }
-
-  function nuevaSalida() {
-    if (!confirm('¿Seguro que deseas iniciar una nueva salida de bus? Se borrarán los datos de este mes.')) return;
-    localStorage.removeItem(mesClave);
-    localStorage.removeItem(mesClave+'-total');
-    location.reload();
-  }
-
-  function toggleNinos() {
-    incluirNinosComoJovenes = !incluirNinosComoJovenes;
-    mostrarResumenSectores();
-  }
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-  }
+'use strict';
+const $=id=>document.getElementById(id);
+const now=new Date(), mesClave=`asistencia-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`, historyKey=mesClave+'-historial-v12';
+$('mesActivo').textContent='Bus activo: '+now.toLocaleDateString('es-SV',{month:'long',year:'numeric'});
+for(let i=1;i<=10;i++){for(const id of ['sector','eSector']){const op=document.createElement('option');op.value=String(i);op.textContent='Sector '+i;$(id).appendChild(op)}}
+$('eSector').insertAdjacentHTML('afterbegin','<option value="">Seleccione</option>');
+const fields=['sector','grupo','genero','tipo','cantidad'];
+let registros=[], editarId=null, incluirNinosComoJovenes=false, currentView='';
+const uid=()=>Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);
+function load(){try{const saved=JSON.parse(localStorage.getItem(historyKey));if(Array.isArray(saved)){registros=saved.filter(valid);return}}catch(e){console.warn('Historial no legible',e)}
+// Migración sin pérdida de los datos de la versión anterior: los ingresos antiguos no tienen hora ni agrupación.
+try{const old=JSON.parse(localStorage.getItem(mesClave)||'{}');for(const [sector,people] of Object.entries(old)){if(!Array.isArray(people))continue;for(const p of people){const r={id:uid(),sector:String(sector),grupo:p.grupo,genero:p.genero,tipo:p.tipo,cantidad:1,hora:null,legacy:true};if(valid(r))registros.push(r)}}if(registros.length)save()}catch(e){console.warn('Datos anteriores no legibles',e)}}
+function valid(r){return r&&/^(?:[1-9]|10)$/.test(String(r.sector))&&['adulto','joven','nino'].includes(r.grupo)&&['hombre','mujer'].includes(r.genero)&&['hermano','amigo'].includes(r.tipo)&&Number.isInteger(Number(r.cantidad))&&Number(r.cantidad)>=1&&Number(r.cantidad)<=5}
+function save(){try{localStorage.setItem(historyKey,JSON.stringify(registros));const old={};for(const r of registros){(old[r.sector]??=[]);for(let n=0;n<r.cantidad;n++)old[r.sector].push({grupo:r.grupo,genero:r.genero,tipo:r.tipo})}localStorage.setItem(mesClave,JSON.stringify(old));localStorage.setItem(mesClave+'-total',String(total()))}catch(e){alert('No se pudo guardar el registro en este dispositivo. Revisá el espacio disponible.')}}
+function total(){return registros.reduce((sum,r)=>sum+Number(r.cantidad),0)}
+function update(){ $('totalBus').textContent='Total en el bus: '+total();if(currentView==='sectores')renderSectores();if(currentView==='pastoral')renderPastoral();renderHistory()}
+function registrar(){const r={id:uid(),hora:new Date().toISOString()};for(const key of fields)r[key]=$(key).value;r.cantidad=Number(r.cantidad);if(!valid(r)){alert('Completá todos los campos');return}registros.push(r);save();fields.forEach(f=>$(f).value=f==='cantidad'?'1':'');update()}
+function showView(which){currentView=which;$('resumenSectores').classList.toggle('hidden',which!=='sectores');$('resumenPastoral').classList.toggle('hidden',which!=='pastoral');if(which==='sectores')renderSectores();else renderPastoral()}
+function renderSectores(){let html='',general=0;for(let i=1;i<=10;i++){let aH=0,aA=0,jH=0,jA=0;for(const r of registros.filter(x=>Number(x.sector)===i)){const c=Number(r.cantidad);if(r.grupo==='adulto'){if(r.tipo==='hermano')aH+=c;else aA+=c}else if(r.grupo==='joven'||(r.grupo==='nino'&&incluirNinosComoJovenes)){if(r.tipo==='hermano')jH+=c;else jA+=c}}general+=aH+aA+jH+jA;html+=`<tr><td>${i}</td><td>${aH}</td><td>${aA}</td><td>${aH+aA}</td><td>${jH}</td><td>${jA}</td><td>${jH+jA}</td></tr>`}$('tablaSectores').innerHTML=html;$('totalSector').textContent=general;$('toggleNinos').textContent='Niños incluidos en jóvenes: '+(incluirNinosComoJovenes?'SÍ':'NO')}
+function renderPastoral(){const c={AH:0,AM:0,JH:0,JM:0,NH:0,NM:0};for(const r of registros){const k=(r.grupo==='adulto'?'A':r.grupo==='joven'?'J':'N')+(r.genero==='hombre'?'H':'M');c[k]+=Number(r.cantidad)}$('tablaPastoral').innerHTML=`<tr><th colspan="2">Adultos</th></tr><tr><td>Hermanos</td><td>${c.AH}</td></tr><tr><td>Hermanas</td><td>${c.AM}</td></tr><tr><th colspan="2">Jóvenes</th></tr><tr><td>Hermanos</td><td>${c.JH}</td></tr><tr><td>Hermanas</td><td>${c.JM}</td></tr><tr><th colspan="2">Niños</th></tr><tr><td>Niños</td><td>${c.NH}</td></tr><tr><td>Niñas</td><td>${c.NM}</td></tr><tr><th>Total general</th><th>${total()}</th></tr>`}
+const labels={adulto:'Adulto',joven:'Joven',nino:'Niño',hombre:'Hombre',mujer:'Mujer',hermano:'Hermano',amigo:'Amigo'};
+function renderHistory(){const list=$('historyList');list.replaceChildren();if(!registros.length){list.textContent='Todavía no hay ingresos.';return}for(const r of [...registros].reverse()){const div=document.createElement('div');div.className='history-entry';const p=document.createElement('p');p.textContent=`Sector ${r.sector} › ${labels[r.grupo]} › ${labels[r.genero]} › ${labels[r.tipo]} › ${r.cantidad} ${r.cantidad===1?'persona':'personas'}`;const time=document.createElement('p');time.className='muted small';time.textContent=r.hora?'Hora: '+new Date(r.hora).toLocaleTimeString('es-SV'):'Registro anterior (hora no disponible)';const acts=document.createElement('div');acts.className='actions';const edit=document.createElement('button');edit.className='outline';edit.textContent='Editar';edit.onclick=()=>openEdit(r.id);const del=document.createElement('button');del.className='danger';del.textContent='Borrar';del.onclick=()=>{if(confirm('¿Eliminar este ingreso de '+r.cantidad+' persona(s)?')){registros=registros.filter(x=>x.id!==r.id);save();update()}};acts.append(edit,del);div.append(p,time,acts);list.appendChild(div)}}
+function openEdit(id){const r=registros.find(x=>x.id===id);if(!r)return;editarId=id;for(const f of fields)$('e'+f[0].toUpperCase()+f.slice(1)).value=String(r[f]);$('editModal').classList.remove('hidden')}
+function closeEdit(){editarId=null;$('editModal').classList.add('hidden')}
+function saveEdit(){const r=registros.find(x=>x.id===editarId);if(!r)return;const next={...r};for(const f of fields)next[f]=$('e'+f[0].toUpperCase()+f.slice(1)).value;next.cantidad=Number(next.cantidad);if(!valid(next)){alert('Revisá todos los campos');return}Object.assign(r,next);save();closeEdit();update()}
+function exportPDF(){const choice=prompt('¿Qué PDF querés exportar?\n1 = Resumen por sectores\n2 = Resumen pastoral');if(choice!=='1'&&choice!=='2')return;if(choice==='1'){incluirNinosComoJovenes=confirm('¿Incluir niños como jóvenes en el resumen por sectores?');showView('sectores')}else showView('pastoral');const stamp='Generado el: '+new Date().toLocaleString('es-SV');$('footerSectores').textContent=stamp;$('footerPastoral').textContent=stamp;$('resumenSectores').classList.toggle('print-target',choice==='1');$('resumenPastoral').classList.toggle('print-target',choice==='2');window.print()}
+$('addBtn').onclick=registrar;$('histBtn').onclick=()=>{$('historyPanel').classList.toggle('hidden');renderHistory()};$('closeHistory').onclick=()=>$('historyPanel').classList.add('hidden');$('sectorBtn').onclick=()=>showView('sectores');$('pastorBtn').onclick=()=>showView('pastoral');$('toggleNinos').onclick=()=>{incluirNinosComoJovenes=!incluirNinosComoJovenes;renderSectores()};$('exportBtn').onclick=exportPDF;$('cancelEdit').onclick=closeEdit;$('saveEdit').onclick=saveEdit;$('newBtn').onclick=()=>{if(confirm('¿Iniciar una nueva salida? Se borrarán los registros del mes activo en este dispositivo.')){registros=[];save();update()}};
+load();update();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./service-worker.js').catch(console.warn);
 </script>
-
-</body>
-</html>
-
+</body></html>
