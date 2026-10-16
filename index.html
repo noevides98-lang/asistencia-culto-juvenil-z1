@@ -69,7 +69,14 @@
     <option value="hermano">Hermano</option>
     <option value="amigo">Amigo</option>
   </select>
-
+<label for="cantidad">Cantidad de personas</label>
+<select id="cantidad">
+  <option value="1" selected>1 persona</option>
+  <option value="2">2 personas</option>
+  <option value="3">3 personas</option>
+  <option value="4">4 personas</option>
+  <option value="5">5 personas</option>
+</select>
   <button onclick="registrar()">Agregar persona</button>
   <div class="totalBus" id="totalBus">Total en el bus: 0</div>
 <button class="secondary" onclick="nuevaSalida()" style="margin-top:10px;background:#b71c1c;">🗑️ Nueva salida de bus</button>
@@ -120,18 +127,36 @@
   const tipoEl = document.getElementById('tipo');
 
   function registrar() {
-    localStorage.setItem(mesClave, JSON.stringify(datos));
-    const sector = sectorEl.value;
-    const grupo = grupoEl.value;
-    const genero = generoEl.value;
-    const tipo = tipoEl.value;
-    if (!sector || !grupo || !genero || !tipo) return alert('Completá todos los campos');
-    if (!datos[sector]) datos[sector] = [];
+const sector = sectorEl.value;
+  const grupo = grupoEl.value;
+  const genero = generoEl.value;
+  const tipo = tipoEl.value;
+  const cantidad = Number(document.getElementById('cantidad').value);
+
+  if (!sector || !grupo || !genero || !tipo) {
+    alert('Completá todos los campos');
+    return;
+  }
+
+  if (!datos[sector]) datos[sector] = [];
+
+  for (let i = 0; i < cantidad; i++) {
     datos[sector].push({ grupo, genero, tipo });
-    totalBus++;
-    localStorage.setItem(mesClave+'-total', totalBus);
-    document.getElementById('totalBus').innerText = 'Total en el bus: ' + totalBus;
-    sectorEl.value = grupoEl.value = generoEl.value = tipoEl.value = '';
+  }
+
+  totalBus += cantidad;
+
+  localStorage.setItem(mesClave, JSON.stringify(datos));
+  localStorage.setItem(mesClave + '-total', totalBus);
+
+  document.getElementById('totalBus').innerText =
+    'Total en el bus: ' + totalBus;
+
+  sectorEl.value = '';
+  grupoEl.value = '';
+  generoEl.value = '';
+  tipoEl.value = '';
+  document.getElementById('cantidad').value = '1';
   }
 
   function mostrarResumenSectores() {
